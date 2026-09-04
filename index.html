@@ -1,201 +1,452 @@
+```html
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Special Wishes</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Playfair+Display:wght@600;700&display=swap" rel="stylesheet">
+
     <style>
         * {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
         }
+
         body {
+            width: 100%;
             height: 100vh;
             overflow: hidden;
-            font-family: Arial, sans-serif;
-            background: #020817;
+
             display: flex;
             justify-content: center;
             align-items: center;
+
+            background: #010612;
+            font-family: "DM Sans", sans-serif;
             color: white;
         }
+
         .background {
             position: fixed;
             inset: 0;
             overflow: hidden;
-            background:
-                radial-gradient(circle at center,
-                rgba(0, 119, 255, 0.18),
-                transparent 55%),
-                #020817;
             z-index: -2;
+
+            background:
+                radial-gradient(
+                    circle at 50% 50%,
+                    rgba(0, 110, 255, 0.22),
+                    transparent 55%
+                ),
+                radial-gradient(
+                    circle at 20% 20%,
+                    rgba(0, 174, 255, 0.08),
+                    transparent 35%
+                ),
+                #010612;
         }
+
         .heart {
             position: absolute;
-            top: -50px;
+            top: -60px;
+
             color: #168cff;
-            font-size: 20px;
-            filter: drop-shadow(0 0 8px #008cff);
-            animation: fall linear infinite;
+
+            filter:
+                drop-shadow(0 0 5px #008cff)
+                drop-shadow(0 0 15px #0077ff);
+
             opacity: 0.8;
+
+            animation: fall linear infinite;
         }
+
         @keyframes fall {
+
             0% {
-                transform: translateY(-60px) rotate(0deg);
+                transform:
+                    translateY(-60px)
+                    rotate(0deg)
+                scale(0.7);
+
                 opacity: 0;
             }
+
             10% {
                 opacity: 1;
             }
+
             100% {
-                transform: translateY(110vh) rotate(360deg);
+                transform:
+                    translateY(110vh)
+                    rotate(360deg)
+                scale(1);
+
                 opacity: 0;
             }
         }
-        .register-box {
-            width: 350px;
-            padding: 40px;
-            border-radius: 20px;
 
-            background: rgba(5, 20, 45, 0.65);
-            backdrop-filter: blur(15px);
+        .register-wrapper {
+            position: relative;
+            padding: 2px;
 
-            border: 1px solid rgba(0, 153, 255, 0.5);
+            border-radius: 24px;
+
+            background: conic-gradient(
+                from 0deg,
+                transparent,
+                #008cff,
+                #7bdcff,
+                transparent,
+                #006eff,
+                transparent
+            );
+
+            animation: borderRotate 5s linear infinite;
 
             box-shadow:
                 0 0 20px rgba(0, 140, 255, 0.4),
-                inset 0 0 20px rgba(0, 120, 255, 0.08);
+                0 0 50px rgba(0, 120, 255, 0.15);
+        }
+
+        @keyframes borderRotate {
+            to {
+                transform: rotate(360deg);
+            }
+        }
+
+
+        .register-box {
+            position: relative;
+
+            width: 370px;
+            padding: 42px;
+
+            border-radius: 22px;
+
+            background:
+                linear-gradient(
+                    145deg,
+                    rgba(5, 22, 50, 0.96),
+                    rgba(2, 10, 27, 0.96)
+                );
+
+            backdrop-filter: blur(20px);
 
             text-align: center;
-        }
-        .register-box h1 {
-            margin-bottom: 8px;
-            color: #4db8ff;
-            text-shadow: 0 0 15px #008cff;
-        }
-        .register-box p {
-            color: #9dccff;
-            margin-bottom: 30px;
-            font-size: 14px;
-        }
-        .input-box {
-            margin-bottom: 20px;
-            text-align: left;
-        }
-        .input-box label {
-            display: block;
-            margin-bottom: 8px;
-            color: #8ecbff;
-            font-size: 14px;
-        }
-        .input-box input {
-            width: 100%;
-            padding: 13px;
-            border-radius: 10px;
-            border: 1px solid #167dcc;
-            outline: none;
 
-            background: rgba(0, 20, 45, 0.7);
-            color: white;
-
-            box-shadow: 0 0 8px rgba(0, 140, 255, 0.2);
+            transform: rotate(0deg);
         }
-        .input-box input:focus {
-            border-color: #35aaff;
-            box-shadow: 0 0 15px rgba(0, 153, 255, 0.6);
-        }
-        .register-btn {
-            width: 100%;
-            padding: 13px;
-            border: none;
-            border-radius: 10px;
 
-            background: linear-gradient(
-                90deg,
-                #006eff,
-                #00aaff
-            );
-            color: white;
-            font-size: 16px;
-            font-weight: bold;
-            cursor: pointer;
+        .glitter {
+            position: absolute;
 
-            box-shadow: 0 0 15px rgba(0, 140, 255, 0.6);
+            width: 4px;
+            height: 4px;
 
-            transition: 0.3s;
-        }
-        .register-btn:hover {
-            transform: scale(1.04);
-            box-shadow: 0 0 30px rgba(0, 170, 255, 0.9);
-        }
-        .sparkle {
-            position: fixed;
-            pointer-events: none;
-            width: 5px;
-            height: 5px;
             border-radius: 50%;
-            background: #63c7ff;
+
+            background: #8bdcff;
 
             box-shadow:
-                0 0 5px #63c7ff,
-                0 0 10px #009dff,
+                0 0 5px #8bdcff,
+                0 0 12px #009dff,
                 0 0 20px #0077ff;
 
-            animation: sparkleFade 0.8s ease-out forwards;
+            pointer-events: none;
+
+            animation: glitterMove 2s ease-in-out infinite;
         }
+
+        @keyframes glitterMove {
+
+            0%, 100% {
+                opacity: 0.2;
+                transform: scale(0.5);
+            }
+
+            50% {
+                opacity: 1;
+                transform: scale(1.5);
+            }
+        }
+
+        .register-box h1 {
+            font-family: "Playfair Display", serif;
+
+            font-size: 38px;
+            font-weight: 700;
+
+            letter-spacing: 1px;
+
+            color: #e8f7ff;
+
+            text-shadow:
+                0 0 10px #008cff,
+                0 0 25px rgba(0, 140, 255, 0.8);
+
+            margin-bottom: 8px;
+        }
+
+        .register-box h1 span {
+            color: #36aaff;
+        }
+
+        .subtitle {
+            font-size: 14px;
+
+            color: #91bde0;
+
+            letter-spacing: 1px;
+
+            margin-bottom: 32px;
+        }
+
+        .input-box {
+            text-align: left;
+            margin-bottom: 22px;
+        }
+
+        .input-box label {
+            display: block;
+
+            margin-bottom: 8px;
+
+            font-size: 13px;
+            font-weight: 600;
+
+            letter-spacing: 0.8px;
+
+            color: #9ed6ff;
+        }
+
+        .input-box input {
+            width: 100%;
+
+            padding: 14px 15px;
+
+            border-radius: 12px;
+
+            border: 1px solid rgba(61, 166, 255, 0.35);
+
+            outline: none;
+
+            background: rgba(0, 20, 45, 0.75);
+
+            color: white;
+
+            font-family: "DM Sans", sans-serif;
+            font-size: 14px;
+
+            transition: 0.3s;
+
+            box-shadow:
+                inset 0 0 15px rgba(0, 120, 255, 0.05);
+        }
+
+        .input-box input::placeholder {
+            color: #587b99;
+        }
+
+        .input-box input:focus {
+            border-color: #27aaff;
+
+            box-shadow:
+                0 0 8px rgba(0, 153, 255, 0.4),
+                0 0 20px rgba(0, 120, 255, 0.2);
+        }
+
+ 
+        input[type="date"]::-webkit-calendar-picker-indicator {
+            filter: invert(1);
+            opacity: 0.7;
+            cursor: pointer;
+        }
+
+
+        .register-btn {
+            width: 100%;
+
+            padding: 14px;
+
+            border: none;
+            border-radius: 12px;
+
+            cursor: pointer;
+
+            font-family: "DM Sans", sans-serif;
+            font-size: 15px;
+            font-weight: 700;
+
+            letter-spacing: 0.5px;
+
+            color: white;
+
+            background:
+                linear-gradient(
+                    100deg,
+                    #006eff,
+                    #00aaff,
+                    #0077ff
+                );
+
+            background-size: 200%;
+
+            box-shadow:
+                0 0 15px rgba(0, 140, 255, 0.5);
+
+            transition: 0.4s;
+        }
+
+        .register-btn:hover {
+            background-position: 100%;
+
+            transform: translateY(-2px);
+
+            box-shadow:
+                0 0 15px #008cff,
+                0 0 35px rgba(0, 140, 255, 0.6);
+        }
+
+        .register-btn:active {
+            transform: scale(0.97);
+        }
+
+        .sparkle {
+            position: fixed;
+
+            pointer-events: none;
+
+            width: 5px;
+            height: 5px;
+
+            border-radius: 50%;
+
+            background: #b7eaff;
+
+            box-shadow:
+                0 0 5px #b7eaff,
+                0 0 12px #00aaff,
+                0 0 22px #0077ff;
+
+            animation: sparkleFade 0.8s ease-out forwards;
+
+            z-index: 100;
+        }
+
         @keyframes sparkleFade {
+
             0% {
                 transform: scale(1);
                 opacity: 1;
             }
 
             100% {
-                transform: translate(
-                    calc(var(--x) * 1px),
-                    calc(var(--y) * 1px)
-                ) scale(0);
+                transform:
+                    translate(
+                        calc(var(--x) * 1px),
+                        calc(var(--y) * 1px)
+                    )
+                    scale(0);
+
                 opacity: 0;
+            }
+        }
+
+        @media (max-width: 450px) {
+
+            .register-box {
+                width: 310px;
+                padding: 32px 25px;
+            }
+
+            .register-box h1 {
+                font-size: 32px;
             }
         }
     </style>
 </head>
 <body>
+
     <div class="background" id="heartRain"></div>
-    <div class="register-box">
-        <h1>💙 REGISTER 💙</h1>
-        <p>Create your account</p>
-        <form>
-            <div class="input-box">
-                <label>Name</label>
-                <input type="text" placeholder="Enter your name" required>
-            </div>
-            <div class="input-box">
-                <label>Date of Birth</label>
-                <input type="date" required>
-            </div>
-            <button class="register-btn" type="submit">
-                Register
-            </button>
-        </form>
+
+    <div class="register-wrapper" id="registerWrapper">
+
+        <div class="register-box">
+
+            <h1>Welcome <span>💙</span></h1>
+
+            <p class="subtitle">
+                Create your account
+            </p>
+
+            <form>
+
+                <div class="input-box">
+                    <label>FULL NAME</label>
+
+                    <input
+                        type="text"
+                        placeholder="Enter your name"
+                        required
+                    >
+                </div>
+
+
+                <div class="input-box">
+                    <label>DATE OF BIRTH</label>
+
+                    <input
+                        type="date"
+                        required
+                    >
+                </div>
+
+
+                <button
+                    class="register-btn"
+                    type="submit"
+                >
+                    Create Account
+                </button>
+
+            </form>
+
+        </div>
 
     </div>
     <script>
-        /* Create falling hearts */
-        const heartRain = document.getElementById("heartRain");
-        function createHeart() {
-            const heart = document.createElement("div");
 
-            heart.classList.add("heart");
+        const heartRain =
+            document.getElementById("heartRain");
+
+        function createHeart() {
+
+            const heart =
+                document.createElement("div");
+
+            heart.className = "heart";
+
             heart.innerHTML = "💙";
 
-            heart.style.left = Math.random() * 100 + "vw";
+            heart.style.left =
+                Math.random() * 100 + "vw";
 
-            const size = Math.random() * 20 + 10;
-            heart.style.fontSize = size + "px";
+            const size =
+                Math.random() * 18 + 10;
 
-            const duration = Math.random() * 5 + 5;
-            heart.style.animationDuration = duration + "s";
+            heart.style.fontSize =
+                size + "px";
+
+            const duration =
+                Math.random() * 5 + 5;
+
+            heart.style.animationDuration =
+                duration + "s";
 
             heart.style.animationDelay =
                 Math.random() * 2 + "s";
@@ -204,42 +455,108 @@
 
             setTimeout(() => {
                 heart.remove();
-            }, (duration + 2) * 1000);
+            }, (duration + 3) * 1000);
         }
-        setInterval(createHeart, 250);
-        document.addEventListener("mousemove", function(e) {
 
-            for (let i = 0; i < 2; i++) {
+        setInterval(createHeart, 220);
 
-                const sparkle = document.createElement("div");
+        const wrapper =
+            document.getElementById("registerWrapper");
 
-                sparkle.classList.add("sparkle");
+        function createGlitter() {
 
-                sparkle.style.left = e.clientX + "px";
-                sparkle.style.top = e.clientY + "px";
+            const glitter =
+                document.createElement("div");
 
-                sparkle.style.setProperty(
-                    "--x",
-                    (Math.random() - 0.5) * 80
-                );
+            glitter.className = "glitter";
 
-                sparkle.style.setProperty(
-                    "--y",
-                    (Math.random() - 0.5) * 80
-                );
+            const side =
+                Math.floor(Math.random() * 4);
 
-                document.body.appendChild(sparkle);
+            if (side === 0) {
+             
+                glitter.style.left =
+                    Math.random() * 100 + "%";
 
-                setTimeout(() => {
-                    sparkle.remove();
-                }, 800);
+                glitter.style.top = "-8px";
+
+            } else if (side === 1) {
+               
+                glitter.style.right = "-8px";
+
+                glitter.style.top =
+                    Math.random() * 100 + "%";
+
+            } else if (side === 2) {
+            
+                glitter.style.left =
+                    Math.random() * 100 + "%";
+
+                glitter.style.bottom = "-8px";
+
+            } else {
+            
+                glitter.style.left = "-8px";
+
+                glitter.style.top =
+                    Math.random() * 100 + "%";
             }
-        });
-        document.querySelector("form").addEventListener("submit", function(e) {
-            e.preventDefault();
-            alert("Registration successful! 💙");
-        });
-    </script>
 
+            glitter.style.animationDelay =
+                Math.random() * 2 + "s";
+
+            wrapper.appendChild(glitter);
+
+            setTimeout(() => {
+                glitter.remove();
+            }, 2500);
+        }
+
+        setInterval(createGlitter, 120);
+        document.addEventListener(
+            "mousemove",
+            function(e) {
+
+                for (let i = 0; i < 3; i++) {
+
+                    const sparkle =
+                        document.createElement("div");
+
+                    sparkle.className = "sparkle";
+
+                    sparkle.style.left =
+                        e.clientX + "px";
+
+                    sparkle.style.top =
+                        e.clientY + "px";
+
+                    sparkle.style.setProperty(
+                        "--x",
+                        (Math.random() - 0.5) * 100
+                    );
+
+                    sparkle.style.setProperty(
+                        "--y",
+                        (Math.random() - 0.5) * 100
+                    );
+
+                    document.body.appendChild(
+                        sparkle
+                    );
+
+                    setTimeout(() => {
+                        sparkle.remove();
+                    }, 800);
+                }
+            }
+        );
+        document.querySelector("form")
+            .addEventListener("submit", function(e) {
+                e.preventDefault();
+                alert(
+                    "Registration successful! 💙"
+                );
+            });
+    </script>
 </body>
 </html>
