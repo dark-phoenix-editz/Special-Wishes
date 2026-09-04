@@ -542,12 +542,11 @@
                 }
             }
         );
-        document.querySelector("form")
-            .addEventListener("submit", function(e) {
-                e.preventDefault();
-                alert(
-                    "Registration successful! 💙"
-                );
+        document.querySelector("form").addEventListener("submit", function(e) {
+           e.preventDefault();
+           const name = document.querySelector('input[type="text"]').value;
+           localStorage.setItem("birthdayName", name);
+           window.location.href = "home.html";
             });
     </script>
 </body>
