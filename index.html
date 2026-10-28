@@ -6,6 +6,10 @@
 
     <title>Birthday Wishes 💙</title>
 
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@500;600;700&family=Poppins:wght@300;400;500;600;700&family=Orbitron:wght@500;600;700&display=swap" rel="stylesheet">
+
     <style>
         * {
             margin: 0;
@@ -13,40 +17,160 @@
             box-sizing: border-box;
         }
 
+        :root {
+            --blue: #008cff;
+            --light-blue: #9fe4ff;
+            --deep-blue: #020817;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
         body {
             min-height: 100vh;
+            padding: 125px 0 35px;
             display: flex;
             justify-content: center;
             align-items: center;
-            overflow: hidden;
-            font-family: Arial, sans-serif;
+            overflow-x: hidden;
+            font-family: 'Poppins', sans-serif;
             color: white;
+
             background:
-                radial-gradient(circle at top, #123b78, #06152f 65%, #020817);
+                radial-gradient(ellipse at 50% 0%, #164d91 0%, transparent 55%),
+                radial-gradient(ellipse at bottom, #062d62 0%, transparent 60%),
+                linear-gradient(135deg, #020817, #061a38, #020817);
+
+            background-attachment: fixed;
         }
 
-        /* Main container */
+        .site-header {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            padding: 25px 15px;
+            text-align: center;
+            z-index: 5;
+        }
+
+        .header-title {
+            font-family: 'Orbitron', sans-serif;
+            font-size: clamp(19px, 4vw, 30px);
+            font-weight: 700;
+            letter-spacing: 4px;
+            color: #d9f3ff;
+
+            text-shadow:
+                0 0 5px #ffffff,
+                0 0 12px #00aaff,
+                0 0 25px #008cff,
+                0 0 45px #0066ff;
+
+            animation: headerGlow 3s ease-in-out infinite alternate;
+        }
+
+        .header-subtitle {
+            margin-top: 9px;
+            font-size: 10px;
+            letter-spacing: 5px;
+            color: #8ecbff;
+            text-transform: uppercase;
+        }
+
+        .header-line {
+            width: 160px;
+            max-width: 60%;
+            height: 2px;
+            margin: 15px auto 0;
+            border-radius: 50%;
+            background: linear-gradient(
+                90deg,
+                transparent,
+                #00aaff,
+                #d9f3ff,
+                #00aaff,
+                transparent
+            );
+
+            box-shadow: 0 0 12px #008cff;
+            animation: lineGlow 2s ease-in-out infinite alternate;
+        }
+
+        @keyframes headerGlow {
+            from {
+                text-shadow:
+                    0 0 5px #ffffff,
+                    0 0 12px #008cff,
+                    0 0 22px #0066ff;
+            }
+
+            to {
+                text-shadow:
+                    0 0 8px #ffffff,
+                    0 0 18px #00b7ff,
+                    0 0 35px #008cff,
+                    0 0 55px #0055ff;
+            }
+        }
+
+        @keyframes lineGlow {
+            from {
+                opacity: 0.5;
+                transform: scaleX(0.7);
+            }
+
+            to {
+                opacity: 1;
+                transform: scaleX(1);
+            }
+        }
+
+
         .container {
             position: relative;
             z-index: 2;
             width: 90%;
-            max-width: 430px;
-            padding: 35px 25px;
+            max-width: 440px;
+            padding: 38px 28px;
             text-align: center;
-            border: 1px solid rgba(125, 190, 255, 0.5);
-            border-radius: 22px;
-            background: rgba(5, 24, 55, 0.75);
+
+            border: 1px solid rgba(105, 190, 255, 0.6);
+            border-radius: 24px;
+
+            background: linear-gradient(
+                145deg,
+                rgba(10, 39, 79, 0.88),
+                rgba(2, 15, 38, 0.94)
+            );
+
+            backdrop-filter: blur(15px);
+
             box-shadow:
-                0 0 20px rgba(0, 136, 255, 0.5),
-                0 0 45px rgba(0, 136, 255, 0.2);
-            backdrop-filter: blur(10px);
-            animation: appear 1s ease;
+                0 0 15px rgba(0, 140, 255, 0.25),
+                0 0 35px rgba(0, 140, 255, 0.2),
+                inset 0 0 20px rgba(0, 140, 255, 0.06);
+
+            animation: boxAppear 1s ease forwards;
+            transition:
+                border-color 0.4s,
+                box-shadow 0.4s;
         }
 
-        @keyframes appear {
+        .container:hover {
+            border-color: #64c9ff;
+
+            box-shadow:
+                0 0 20px rgba(0, 140, 255, 0.45),
+                0 0 50px rgba(0, 140, 255, 0.25),
+                inset 0 0 25px rgba(0, 140, 255, 0.1);
+        }
+
+        @keyframes boxAppear {
             from {
                 opacity: 0;
-                transform: translateY(25px) scale(0.95);
+                transform: translateY(30px) scale(0.95);
             }
 
             to {
@@ -55,78 +179,221 @@
             }
         }
 
+        /* Decorative glow behind the box */
+        .container::before {
+            content: "";
+            position: absolute;
+            inset: -2px;
+            border-radius: 25px;
+            background: linear-gradient(
+                135deg,
+                transparent,
+                rgba(0, 174, 255, 0.35),
+                transparent,
+                rgba(0, 100, 255, 0.2),
+                transparent
+            );
+            z-index: -1;
+            filter: blur(12px);
+            opacity: 0.7;
+            animation: borderGlow 5s linear infinite;
+        }
+
+        @keyframes borderGlow {
+            0% {
+                filter: blur(10px);
+                opacity: 0.4;
+            }
+
+            50% {
+                filter: blur(18px);
+                opacity: 0.9;
+            }
+
+            100% {
+                filter: blur(10px);
+                opacity: 0.4;
+            }
+        }
+
+        /* =========================
+           STYLISH MAIN TEXT
+        ========================= */
+
         h1 {
+            font-family: 'Cinzel', serif;
             font-size: clamp(25px, 6vw, 34px);
-            color: #a9d9ff;
-            text-shadow: 0 0 15px #168cff;
-            margin-bottom: 12px;
+            font-weight: 700;
+            line-height: 1.5;
+            margin-bottom: 15px;
+
+            background: linear-gradient(
+                90deg,
+                #ffffff,
+                #8edaff,
+                #40aaff,
+                #ffffff
+            );
+
+            background-size: 250% auto;
+            background-clip: text;
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+
+            animation: textShine 5s linear infinite;
+        }
+
+        @keyframes textShine {
+            0% {
+                background-position: 0% center;
+            }
+
+            100% {
+                background-position: 250% center;
+            }
         }
 
         .subtitle {
-            font-size: 14px;
-            color: #d4eaff;
-            line-height: 1.6;
-            margin-bottom: 25px;
+            font-size: 13px;
+            font-weight: 300;
+            letter-spacing: 0.5px;
+            line-height: 1.9;
+            color: #c8e7ff;
+            margin-bottom: 28px;
         }
 
-        /* Form */
+        .subtitle span {
+            color: #65c9ff;
+            font-weight: 600;
+            text-shadow: 0 0 10px #008cff;
+        }
+
+        /* =========================
+           INPUT FIELDS
+        ========================= */
+
         .input-group {
             text-align: left;
-            margin-bottom: 18px;
+            margin-bottom: 20px;
         }
 
         label {
             display: block;
-            margin-bottom: 8px;
-            font-size: 14px;
-            color: #d9ecff;
+            margin-bottom: 9px;
+            font-size: 12px;
+            font-weight: 500;
+            letter-spacing: 1px;
+            color: #b9e2ff;
+            text-transform: uppercase;
         }
 
         input {
             width: 100%;
-            padding: 13px;
-            border: 1px solid #4ba7ff;
-            border-radius: 10px;
+            padding: 14px 15px;
+
+            border: 1px solid rgba(79, 170, 255, 0.6);
+            border-radius: 12px;
             outline: none;
-            color: white;
-            background: rgba(0, 18, 45, 0.85);
-            font-size: 15px;
-            transition: 0.3s;
+
+            color: #ffffff;
+            background: rgba(0, 12, 32, 0.85);
+
+            font-family: 'Poppins', sans-serif;
+            font-size: 13px;
+
+            transition: all 0.35s ease;
+        }
+
+        input:hover {
+            border-color: #53baff;
+            box-shadow: 0 0 12px rgba(0, 140, 255, 0.2);
         }
 
         input:focus {
-            border-color: #a4dcff;
-            box-shadow: 0 0 15px rgba(0, 145, 255, 0.7);
+            border-color: #9fe4ff;
+            background: rgba(0, 24, 55, 0.95);
+
+            box-shadow:
+                0 0 8px rgba(0, 174, 255, 0.5),
+                0 0 20px rgba(0, 140, 255, 0.25);
+
+            transform: translateY(-2px);
         }
 
         input::placeholder {
-            color: #8faacb;
+            color: #6689ad;
+            font-size: 12px;
         }
 
         input[type="date"]::-webkit-calendar-picker-indicator {
             cursor: pointer;
-            filter: invert(1);
+            filter: invert(1) sepia(1) saturate(5) hue-rotate(175deg);
         }
 
-        /* Continue button */
+        /* =========================
+           CONTINUE BUTTON
+        ========================= */
+
         button {
+            position: relative;
+            overflow: hidden;
+
             width: 100%;
             margin-top: 8px;
-            padding: 14px;
-            border: none;
+            padding: 15px;
+
+            border: 1px solid rgba(176, 229, 255, 0.7);
             border-radius: 12px;
+
             color: white;
-            background: linear-gradient(90deg, #087cff, #00b7ff);
-            font-size: 16px;
-            font-weight: bold;
+            background: linear-gradient(100deg, #005de8, #008cff, #00bfff);
+            background-size: 200% 100%;
+
+            font-family: 'Orbitron', sans-serif;
+            font-size: 12px;
+            font-weight: 600;
+            letter-spacing: 2px;
+
             cursor: pointer;
-            box-shadow: 0 0 18px rgba(0, 145, 255, 0.5);
-            transition: 0.3s;
+
+            box-shadow:
+                0 0 12px rgba(0, 140, 255, 0.45),
+                0 0 25px rgba(0, 140, 255, 0.2);
+
+            transition: all 0.35s ease;
+        }
+
+        button::before {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: -120%;
+            width: 70%;
+            height: 100%;
+
+            background: linear-gradient(
+                90deg,
+                transparent,
+                rgba(255, 255, 255, 0.5),
+                transparent
+            );
+
+            transform: skewX(-25deg);
+            transition: left 0.6s ease;
         }
 
         button:hover {
-            transform: scale(1.04);
-            box-shadow: 0 0 28px rgba(0, 183, 255, 0.9);
+            background-position: 100% center;
+            transform: translateY(-3px) scale(1.02);
+
+            box-shadow:
+                0 0 15px #008cff,
+                0 0 30px rgba(0, 174, 255, 0.65),
+                0 0 50px rgba(0, 100, 255, 0.25);
+        }
+
+        button:hover::before {
+            left: 150%;
         }
 
         button:active {
@@ -135,26 +402,41 @@
 
         #message {
             margin-top: 16px;
-            color: #a9dcff;
-            font-size: 14px;
+            color: #9fe4ff;
+            font-size: 12px;
             overflow-wrap: anywhere;
         }
 
         .footer {
-            margin-top: 24px;
-            font-size: 12px;
-            color: #9bbfe8;
+            margin-top: 25px;
+            font-size: 11px;
+            font-weight: 300;
+            letter-spacing: 1px;
+            color: #80bce9;
         }
 
-        /* Falling hearts */
+        .footer span {
+            color: #58bdff;
+            text-shadow: 0 0 10px #008cff;
+        }
+
+        /* =========================
+           FALLING HEARTS
+        ========================= */
+
         .heart {
             position: fixed;
             top: -40px;
             z-index: 1;
+
             color: #64baff;
-            text-shadow: 0 0 12px #168cff;
+            text-shadow:
+                0 0 8px #168cff,
+                0 0 18px #008cff;
+
             pointer-events: none;
             user-select: none;
+
             animation: fall linear forwards;
         }
 
@@ -178,18 +460,27 @@
             }
         }
 
-        /* Glitter particles */
+        /* =========================
+           GLITTER PARTICLES
+        ========================= */
+
         .sparkle {
             position: fixed;
             z-index: 1;
-            width: 4px;
-            height: 4px;
+
+            width: 3px;
+            height: 3px;
             border-radius: 50%;
+
             background: #d5efff;
+
             box-shadow:
                 0 0 6px #8bcaff,
-                0 0 12px #168cff;
+                0 0 12px #168cff,
+                0 0 20px #008cff;
+
             pointer-events: none;
+
             animation: glitter 2s ease-in-out infinite alternate;
         }
 
@@ -201,42 +492,191 @@
 
             to {
                 opacity: 1;
-                transform: scale(1.5);
+                transform: scale(1.7);
             }
         }
 
-        @media (max-width: 400px) {
+        /* =========================
+           CUSTOM BLUE CURSOR
+        ========================= */
+
+        .cursor-dot,
+        .cursor-ring {
+            position: fixed;
+            top: 0;
+            left: 0;
+
+            border-radius: 50%;
+            pointer-events: none;
+            z-index: 9999;
+
+            transform: translate(-50%, -50%);
+        }
+
+        .cursor-dot {
+            width: 7px;
+            height: 7px;
+
+            background: #b8edff;
+
+            box-shadow:
+                0 0 8px #00aaff,
+                0 0 18px #008cff;
+        }
+
+        .cursor-ring {
+            width: 32px;
+            height: 32px;
+
+            border: 1px solid rgba(72, 188, 255, 0.9);
+
+            box-shadow:
+                0 0 10px rgba(0, 140, 255, 0.4),
+                inset 0 0 8px rgba(0, 140, 255, 0.15);
+
+            transition:
+                width 0.2s ease,
+                height 0.2s ease,
+                border-color 0.2s ease,
+                background 0.2s ease;
+        }
+
+        .cursor-ring.hovering {
+            width: 48px;
+            height: 48px;
+
+            border-color: #a8eaff;
+            background: rgba(0, 140, 255, 0.12);
+
+            box-shadow:
+                0 0 15px #008cff,
+                0 0 30px rgba(0, 140, 255, 0.5);
+        }
+
+        /* Blue particles left behind by cursor */
+        .cursor-trail {
+            position: fixed;
+            z-index: 9998;
+
+            width: 5px;
+            height: 5px;
+            border-radius: 50%;
+
+            background: #58caff;
+
+            box-shadow:
+                0 0 8px #00aaff,
+                0 0 15px #008cff;
+
+            pointer-events: none;
+
+            animation: trailFade 0.55s ease-out forwards;
+        }
+
+        @keyframes trailFade {
+            0% {
+                opacity: 1;
+                transform: translate(-50%, -50%) scale(1);
+            }
+
+            100% {
+                opacity: 0;
+                transform: translate(-50%, -50%) scale(0);
+            }
+        }
+
+        /* Show the normal cursor on touch devices */
+        @media (hover: hover) and (pointer: fine) {
+            body,
+            button,
+            input {
+                cursor: none;
+            }
+        }
+
+        /* =========================
+           MOBILE RESPONSIVENESS
+        ========================= */
+
+        @media (max-width: 500px) {
+            body {
+                padding: 130px 0 30px;
+            }
+
+            .site-header {
+                padding-top: 22px;
+            }
+
+            .header-title {
+                letter-spacing: 2px;
+            }
+
+            .header-subtitle {
+                font-size: 9px;
+                letter-spacing: 3px;
+            }
+
             .container {
-                padding: 28px 20px;
+                padding: 32px 22px;
             }
 
-            h1 {
-                font-size: 25px;
+            .subtitle {
+                font-size: 12px;
+            }
+
+            .cursor-dot,
+            .cursor-ring,
+            .cursor-trail {
+                display: none;
             }
         }
 
+        /* Respect reduced-motion preferences */
+        @media (prefers-reduced-motion: reduce) {
+            *,
+            *::before,
+            *::after {
+                animation-duration: 0.01ms !important;
+                animation-iteration-count: 1 !important;
+                scroll-behavior: auto !important;
+            }
+        }
     </style>
 </head>
 
 <body>
 
-    <div class="container">
+    <!-- Animated header -->
+    <header class="site-header">
+        <div class="header-title">A LITTLE SURPRISE</div>
+
+        <div class="header-subtitle">
+            Made with love ♡
+        </div>
+
+        <div class="header-line"></div>
+    </header>
+
+
+    <!-- Main birthday form -->
+    <main class="container">
 
         <h1>Hii Darling💙🌏!!!</h1>
 
         <p class="subtitle">
             A little surprise is waiting for you... ✨<br>
-            Enter your details to continue 💙
+            Enter your details to <span>unlock the magic</span> 💙
         </p>
 
         <form id="loginForm">
 
             <div class="input-group">
                 <label for="name">Your Name 💙</label>
+
                 <input
                     type="text"
                     id="name"
-                    placeholder="Enter your name"
+                    placeholder="Enter your name..."
                     autocomplete="name"
                     required
                 >
@@ -244,6 +684,7 @@
 
             <div class="input-group">
                 <label for="dob">Your Date of Birth 🎂</label>
+
                 <input
                     type="date"
                     id="dob"
@@ -251,48 +692,59 @@
                 >
             </div>
 
-            <button type="submit">Continue 💙 →</button>
+            <button type="submit">
+                CONTINUE ♡ →
+            </button>
 
         </form>
 
         <p id="message" aria-live="polite"></p>
 
         <p class="footer">
-            It's my small effort for youhh ♡
+            It's my small effort for youhh <span>♡</span>
         </p>
 
-    </div>
+    </main>
+
+
+    <!-- Custom cursor -->
+    <div class="cursor-dot" id="cursorDot"></div>
+    <div class="cursor-ring" id="cursorRing"></div>
+
 
     <script>
+        // =========================
+        // FORM AND DATE VALIDATION
+        // =========================
+
         const loginForm = document.getElementById("loginForm");
         const nameInput = document.getElementById("name");
         const dobInput = document.getElementById("dob");
         const message = document.getElementById("message");
 
-        // Set today's date as the maximum selectable date
+        // Get today's local date
         const today = new Date();
+
         const localToday =
             today.getFullYear() + "-" +
             String(today.getMonth() + 1).padStart(2, "0") + "-" +
             String(today.getDate()).padStart(2, "0");
 
+        // Do not allow future dates
         dobInput.max = localToday;
 
-        // Continue to the second page
         loginForm.addEventListener("submit", function (event) {
             event.preventDefault();
 
             const name = nameInput.value.trim();
             const dob = dobInput.value;
 
-            // Check that both fields are entered
             if (!name || !dob) {
                 message.textContent =
                     "💙 Please enter your name and date of birth.";
                 return;
             }
 
-            // Prevent future dates
             if (dob > localToday) {
                 message.textContent =
                     "✨ Please enter a valid date of birth.";
@@ -307,7 +759,11 @@
             window.location.href = "home_page.html";
         });
 
-        // Create falling hearts
+
+        // =========================
+        // FALLING HEART ANIMATION
+        // =========================
+
         function createHeart() {
             const heart = document.createElement("div");
 
@@ -315,36 +771,134 @@
             heart.textContent = "♡";
 
             heart.style.left = Math.random() * 100 + "vw";
-            heart.style.fontSize = (15 + Math.random() * 22) + "px";
-            heart.style.animationDuration = (5 + Math.random() * 6) + "s";
+
+            heart.style.fontSize =
+                (15 + Math.random() * 22) + "px";
+
+            heart.style.animationDuration =
+                (5 + Math.random() * 6) + "s";
 
             document.body.appendChild(heart);
 
-            setTimeout(() => {
+            setTimeout(function () {
                 heart.remove();
             }, 11000);
         }
 
-        // Create a heart every 350 milliseconds
+        // Create one falling heart every 350 milliseconds
         setInterval(createHeart, 350);
 
-        // Create glitter particles
+
+        // =========================
+        // GLITTER PARTICLES
+        // =========================
+
         function createSparkle() {
             const sparkle = document.createElement("div");
 
             sparkle.className = "sparkle";
+
             sparkle.style.left = Math.random() * 100 + "vw";
             sparkle.style.top = Math.random() * 100 + "vh";
-            sparkle.style.animationDelay = Math.random() * 2 + "s";
+
+            sparkle.style.animationDelay =
+                Math.random() * 2 + "s";
 
             document.body.appendChild(sparkle);
         }
 
-        // Change 60 to increase the number of glitter particles
+        // Change 60 to increase or decrease the glitter count
         for (let i = 0; i < 60; i++) {
             createSparkle();
+        }
+
+
+        // =========================
+        // CUSTOM MOVING BLUE CURSOR
+        // =========================
+
+        const cursorDot = document.getElementById("cursorDot");
+        const cursorRing = document.getElementById("cursorRing");
+
+        let mouseX = window.innerWidth / 2;
+        let mouseY = window.innerHeight / 2;
+
+        let ringX = mouseX;
+        let ringY = mouseY;
+
+        const finePointer = window.matchMedia(
+            "(hover: hover) and (pointer: fine)"
+        ).matches;
+
+        if (finePointer) {
+            document.addEventListener("mousemove", function (event) {
+                mouseX = event.clientX;
+                mouseY = event.clientY;
+
+                // The small dot follows the mouse directly
+                cursorDot.style.left = mouseX + "px";
+                cursorDot.style.top = mouseY + "px";
+            });
+
+            // The outer ring follows smoothly
+            function animateCursor() {
+                ringX += (mouseX - ringX) * 0.18;
+                ringY += (mouseY - ringY) * 0.18;
+
+                cursorRing.style.left = ringX + "px";
+                cursorRing.style.top = ringY + "px";
+
+                requestAnimationFrame(animateCursor);
+            }
+
+            animateCursor();
+
+
+            // Create a blue particle trail
+            let lastTrailTime = 0;
+
+            document.addEventListener("mousemove", function (event) {
+                const now = Date.now();
+
+                // Limit particles to keep the animation smooth
+                if (now - lastTrailTime < 35) {
+                    return;
+                }
+
+                lastTrailTime = now;
+
+                const trail = document.createElement("div");
+
+                trail.className = "cursor-trail";
+
+                trail.style.left = event.clientX + "px";
+                trail.style.top = event.clientY + "px";
+
+                document.body.appendChild(trail);
+
+                setTimeout(function () {
+                    trail.remove();
+                }, 600);
+            });
+
+
+            // Enlarge the ring when hovering over interactive elements
+            const interactiveElements = document.querySelectorAll(
+                "button, input, a"
+            );
+
+            interactiveElements.forEach(function (element) {
+                element.addEventListener("mouseenter", function () {
+                    cursorRing.classList.add("hovering");
+                });
+
+                element.addEventListener("mouseleave", function () {
+                    cursorRing.classList.remove("hovering");
+                });
+            });
         }
     </script>
 
 </body>
 </html>
+```
