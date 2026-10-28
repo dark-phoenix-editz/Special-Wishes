@@ -1,113 +1,407 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Birthday Wishes 💙</title>
-<style>
-*{margin:0;padding:0;box-sizing:border-box}
-body{min-height:100vh;display:flex;justify-content:center;align-items:center;overflow:hidden;font-family:'Segoe UI',sans-serif;background:radial-gradient(circle at top,#063b91,#020b29 75%);color:white}
-#background{position:fixed;inset:0;overflow:hidden;pointer-events:none}
-.heart{position:absolute;top:-50px;color:#19baff;text-shadow:0 0 15px #008cff;animation:fall linear infinite}
-.sparkle{position:absolute;width:4px;height:4px;background:white;border-radius:50%;box-shadow:0 0 10px 3px #168cff;animation:twinkle 2s infinite alternate}
-@keyframes fall{0%{transform:translateY(-10vh) rotate(0deg);opacity:0}10%{opacity:1}100%{transform:translateY(115vh) rotate(360deg);opacity:0}}
-@keyframes twinkle{from{opacity:.2;transform:scale(.5)}to{opacity:1;transform:scale(1.5)}}
-.container{position:relative;z-index:1;width:90%;max-width:420px;text-align:center;padding:20px 0}
-.heading{font-family:Georgia,serif;font-style:italic;font-size:clamp(42px,10vw,58px);color:#80d7ff;text-shadow:0 0 18px #008cff;margin-bottom:12px}
-.subtitle{color:#75ceff;line-height:1.8;margin-bottom:25px}
-.login-box{padding:35px 25px;border:1px solid #168cff;border-radius:25px;background:rgba(0,25,85,.78);backdrop-filter:blur(15px);box-shadow:0 0 30px rgba(0,140,255,.4)}
-.cake{font-size:45px;margin-bottom:10px}
-.login-title{font-family:Georgia,serif;font-style:italic;font-size:34px;color:#8cdeff;margin-bottom:12px}
-.description{color:#a6dfff;line-height:1.7;margin-bottom:25px}
-.input-box{display:flex;align-items:center;margin-bottom:20px;border:1px solid #168cff;border-radius:15px;background:rgba(0,35,110,.65);padding:0 15px;transition:.3s}
-.input-box:focus-within{box-shadow:0 0 15px #008cff;border-color:#68d6ff}
-.input-box span{font-size:20px;margin-right:12px}
-.input-box input{width:100%;min-width:0;padding:16px 0;border:none;outline:none;background:transparent;color:white;font-size:15px;font-family:inherit}
-.input-box input::placeholder{color:#81bfff}
-.input-box input[type="date"]{color-scheme:dark}
-.login-btn{width:100%;padding:16px;border:none;border-radius:15px;color:white;font-size:19px;font-weight:bold;cursor:pointer;background:linear-gradient(100deg,#087cff,#05c5ff);box-shadow:0 0 20px rgba(0,153,255,.5);transition:.3s}
-.login-btn:hover{transform:translateY(-3px);box-shadow:0 0 30px #008cff}
-.login-btn:active{transform:scale(.97)}
-.footer{margin-top:25px;font-family:Georgia,serif;font-style:italic;color:#63caff;font-size:17px}
-#message{color:#8cdeff;margin-top:15px;font-size:14px;overflow-wrap:anywhere}
-@media(max-width:400px){.login-box{padding:28px 18px}.login-title{font-size:30px}}
-@media(max-height:760px){body{overflow:auto;align-items:flex-start}.container{margin:auto;padding:20px 0}}
-@media(prefers-reduced-motion:reduce){.heart,.sparkle{animation-duration:20s}}
-</style>
-</head>
-<body>
-<div id="background" aria-hidden="true"></div>
-<main class="container">
-  <h1 class="heading">Birthday<br>Wishes ♡</h1>
-  <p class="subtitle">Small words...<br>Big happiness... 💙</p>
-  <section class="login-box">
-    <div class="cake" aria-hidden="true">🎂</div>
-    <h2 class="login-title">Welcome Back</h2>
-    <p class="description">Enter your details to continue<br>to your birthday wishes 💙</p>
-    <form id="loginForm">
-      <div class="input-box">
-        <span aria-hidden="true">👤</span>
-        <input type="text" id="name" placeholder="Enter Your Name" autocomplete="name" maxlength="60" required>
-      </div>
-      <div class="input-box">
-        <span aria-hidden="true">🎂</span>
-        <input type="date" id="dob" aria-label="Date of Birth" required>
-      </div>
-      <button type="submit" class="login-btn">Continue 💙 →</button>
-    </form>
-    <p id="message" role="status" aria-live="polite"></p>
-  </section>
-  <p class="footer">Make Every Birthday Special ♡</p>
-</main>
-<script>
-const background = document.getElementById("background");
-for (let i = 0; i < 35; i++) {
-  const heart = document.createElement("div");
-  heart.className = "heart";
-  heart.textContent = Math.random() > 0.5 ? "💙" : "♡";
-  heart.style.left = Math.random() * 100 + "%";
-  heart.style.fontSize = (15 + Math.random() * 20) + "px";
-  heart.style.animationDuration = (6 + Math.random() * 9) + "s";
-  heart.style.animationDelay = (-Math.random() * 15) + "s";
-  background.appendChild(heart);
-}
-for (let i = 0; i < 65; i++) {
-  const sparkle = document.createElement("div");
-  sparkle.className = "sparkle";
-  sparkle.style.left = Math.random() * 100 + "%";
-  sparkle.style.top = Math.random() * 100 + "%";
-  sparkle.style.animationDelay = Math.random() * 3 + "s";
-  background.appendChild(sparkle);
-}
-const dobInput = document.getElementById("dob");
-const today = new Date();
-const localToday = [
-  today.getFullYear(),
-  String(today.getMonth() + 1).padStart(2, "0"),
-  String(today.getDate()).padStart(2, "0")
-].join("-");
-dobInput.max = localToday;
 
-document.getElementById("loginForm").addEventListener("submit", function(event) {
-  event.preventDefault();
-  const name = document.getElementById("name").value.trim();
-  const dob = dobInput.value;
-  const message = document.getElementById("message");
-  if (!name || !dob) {
-    message.textContent = "💙 Please enter your name and date of birth.";
-    return;
-  }
-  if (dob > localToday) {
-    message.textContent = "✨ Please enter a valid date of birth.";
-    return;
-  }
-  // Demo only: this does not verify an existing account.
-  sessionStorage.setItem("birthdayUserName", name);
-  sessionStorage.setItem("birthdayUserDOB", dob);
-  message.textContent = "🎉 Welcome, " + name + "! Your details are ready.";
-  // To open another page, uncomment the next line after creating home.html:
-  // window.location.href = "home.html";
-});
-</script>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Birthday Wishes 💙</title>
+
+    <style>
+      
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            overflow: hidden;
+            font-family: "Segoe UI", sans-serif;
+            color: white;
+
+            background:
+                radial-gradient(
+                    circle at top,
+                    #063b91,
+                    #020b29 75%
+                );
+        }
+
+        #background {
+            position: fixed;
+            inset: 0;
+            overflow: hidden;
+            pointer-events: none;
+        }
+
+        .heart {
+            position: absolute;
+            top: -50px;
+            color: #19baff;
+            text-shadow: 0 0 15px #008cff;
+            animation: fall linear infinite;
+        }
+
+        .sparkle {
+            position: absolute;
+            width: 4px;
+            height: 4px;
+            border-radius: 50%;
+            background: white;
+            box-shadow: 0 0 10px 3px #168cff;
+            animation: twinkle 2s ease-in-out infinite alternate;
+        }
+
+        @keyframes fall {
+            0% {
+                transform: translateY(-10vh) rotate(0deg);
+                opacity: 0;
+            }
+
+            10% {
+                opacity: 1;
+            }
+
+            100% {
+                transform: translateY(115vh) rotate(360deg);
+                opacity: 0;
+            }
+        }
+
+        @keyframes twinkle {
+            from {
+                opacity: 0.2;
+                transform: scale(0.5);
+            }
+
+            to {
+                opacity: 1;
+                transform: scale(1.5);
+            }
+        }
+
+        .container {
+            position: relative;
+            z-index: 1;
+            width: 90%;
+            max-width: 420px;
+            padding: 20px 0;
+            text-align: center;
+        }
+
+        .heading {
+            margin-bottom: 12px;
+            color: #80d7ff;
+            font-family: Georgia, serif;
+            font-size: clamp(42px, 10vw, 58px);
+            font-style: italic;
+            text-shadow: 0 0 18px #008cff;
+        }
+
+        .subtitle {
+            margin-bottom: 25px;
+            color: #75ceff;
+            line-height: 1.8;
+        }
+
+        .login-box {
+            padding: 35px 25px;
+            border: 1px solid #168cff;
+            border-radius: 25px;
+
+            background: rgba(0, 25, 85, 0.78);
+            backdrop-filter: blur(15px);
+
+            box-shadow: 0 0 30px rgba(0, 140, 255, 0.4);
+        }
+
+        .cake {
+            margin-bottom: 10px;
+            font-size: 45px;
+        }
+
+        .login-title {
+            margin-bottom: 12px;
+            color: #8cdeff;
+            font-family: Georgia, serif;
+            font-size: 34px;
+            font-style: italic;
+        }
+
+        .description {
+            margin-bottom: 25px;
+            color: #a6dfff;
+            line-height: 1.7;
+        }
+
+        .input-box {
+            display: flex;
+            align-items: center;
+            margin-bottom: 20px;
+            padding: 0 15px;
+
+            border: 1px solid #168cff;
+            border-radius: 15px;
+
+            background: rgba(0, 35, 110, 0.65);
+            transition: 0.3s;
+        }
+
+        .input-box:focus-within {
+            border-color: #68d6ff;
+            box-shadow: 0 0 15px #008cff;
+        }
+
+        .input-box span {
+            margin-right: 12px;
+            font-size: 20px;
+        }
+
+        .input-box input {
+            width: 100%;
+            min-width: 0;
+            padding: 16px 0;
+
+            border: none;
+            outline: none;
+
+            background: transparent;
+            color: white;
+            font-family: inherit;
+            font-size: 15px;
+        }
+
+        .input-box input::placeholder {
+            color: #81bfff;
+        }
+
+        .input-box input[type="date"] {
+            color-scheme: dark;
+        }
+
+        .login-btn {
+            width: 100%;
+            padding: 16px;
+
+            border: none;
+            border-radius: 15px;
+
+            background: linear-gradient(
+                100deg,
+                #087cff,
+                #05c5ff
+            );
+
+            color: white;
+            font-size: 19px;
+            font-weight: bold;
+
+            cursor: pointer;
+
+            box-shadow: 0 0 20px rgba(0, 153, 255, 0.5);
+            transition: 0.3s;
+        }
+
+        .login-btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 0 30px #008cff;
+        }
+
+        .login-btn:active {
+            transform: scale(0.97);
+        }
+
+        #message {
+            margin-top: 15px;
+            color: #8cdeff;
+            font-size: 14px;
+            overflow-wrap: anywhere;
+        }
+
+        .footer {
+            margin-top: 25px;
+            color: #63caff;
+            font-family: Georgia, serif;
+            font-size: 17px;
+            font-style: italic;
+        }
+
+        @media (max-width: 400px) {
+            .login-box {
+                padding: 28px 18px;
+            }
+
+            .login-title {
+                font-size: 30px;
+            }
+        }
+
+        @media (max-height: 760px) {
+            body {
+                align-items: flex-start;
+                overflow-y: auto;
+            }
+
+            .container {
+                margin: auto;
+            }
+        }
+
+        @media (prefers-reduced-motion: reduce) {
+            .heart,
+            .sparkle {
+                animation-duration: 20s;
+            }
+
+            .login-btn {
+                transition: none;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <div id="background" aria-hidden="true"></div>
+
+    <main class="container">
+
+        <h1 class="heading">
+            Birthday<br>Wishes ♡
+        </h1>
+
+        <p class="subtitle">
+            Small words...<br>
+            Big happiness... 💙
+        </p>
+
+        <section class="login-box">
+
+            <div class="cake" aria-hidden="true">🎂</div>
+
+            <h2 class="login-title">Hii Darling💙🌏!!!</h2>
+
+            <p class="description">
+                Enter your details to continue<br>
+            </p>
+
+            <form id="loginForm">
+
+                <div class="input-box">
+                    <span aria-hidden="true">👤</span>
+
+                    <input
+                        type="text"
+                        id="name"
+                        placeholder="Enter Your Name"
+                        autocomplete="name"
+                        maxlength="60"
+                        required
+                    >
+                </div>
+
+                <div class="input-box">
+                    <span aria-hidden="true">🎂</span>
+
+                    <input
+                        type="date"
+                        id="dob"
+                        aria-label="Date of Birth"
+                        required
+                    >
+                </div>
+
+                <button type="submit" class="login-btn">
+                    Continue 💙 →
+                </button>
+
+            </form>
+
+            <p id="message" role="status" aria-live="polite"></p>
+
+        </section>
+
+        <p class="footer">
+            Make Every Birthday Special ♡
+        </p>
+
+    </main>
+
+    <script>
+        const background = document.getElementById("background");
+
+        for (let i = 0; i < 35; i++) {
+            const heart = document.createElement("div");
+
+            heart.className = "heart";
+            heart.textContent = Math.random() > 0.5 ? "💙" : "♡";
+
+            heart.style.left = Math.random() * 100 + "%";
+            heart.style.fontSize = (15 + Math.random() * 20) + "px";
+            heart.style.animationDuration = (6 + Math.random() * 9) + "s";
+            heart.style.animationDelay = (-Math.random() * 15) + "s";
+
+            background.appendChild(heart);
+        }
+
+        for (let i = 0; i < 65; i++) {
+            const sparkle = document.createElement("div");
+
+            sparkle.className = "sparkle";
+
+            sparkle.style.left = Math.random() * 100 + "%";
+            sparkle.style.top = Math.random() * 100 + "%";
+            sparkle.style.animationDelay = Math.random() * 3 + "s";
+
+            background.appendChild(sparkle);
+        }
+
+        const dobInput = document.getElementById("dob");
+        const message = document.getElementById("message");
+        const loginForm = document.getElementById("loginForm");
+
+        const today = new Date();
+
+        const localToday = [
+            today.getFullYear(),
+            String(today.getMonth() + 1).padStart(2, "0"),
+            String(today.getDate()).padStart(2, "0")
+        ].join("-");
+
+        dobInput.max = localToday;
+
+        loginForm.addEventListener("submit", function (event) {
+            event.preventDefault();
+
+            const name = document.getElementById("name").value.trim();
+            const dob = dobInput.value;
+
+            if (!name || !dob) {
+                message.textContent =
+                    "💙 Please enter your name and date of birth.";
+
+                return;
+            }
+
+            if (dob > localToday) {
+                message.textContent =
+                    "✨ Please enter a valid date of birth.";
+
+                return;
+            }
+            sessionStorage.setItem("birthdayUserName", name);
+            sessionStorage.setItem("birthdayUserDOB", dob);
+
+            message.textContent =
+                "🎉 Welcome, " + name + "! Your details are ready.";
+
+        });
+    </script>
+
 </body>
 </html>
