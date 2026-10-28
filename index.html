@@ -1,6 +1,5 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -8,7 +7,6 @@
     <title>Birthday Wishes 💙</title>
 
     <style>
-      
         * {
             margin: 0;
             padding: 0;
@@ -21,40 +19,143 @@
             justify-content: center;
             align-items: center;
             overflow: hidden;
-            font-family: "Segoe UI", sans-serif;
+            font-family: Arial, sans-serif;
             color: white;
-
             background:
-                radial-gradient(
-                    circle at top,
-                    #063b91,
-                    #020b29 75%
-                );
+                radial-gradient(circle at top, #123b78, #06152f 65%, #020817);
         }
 
-        #background {
-            position: fixed;
-            inset: 0;
-            overflow: hidden;
-            pointer-events: none;
+        /* Main container */
+        .container {
+            position: relative;
+            z-index: 2;
+            width: 90%;
+            max-width: 430px;
+            padding: 35px 25px;
+            text-align: center;
+            border: 1px solid rgba(125, 190, 255, 0.5);
+            border-radius: 22px;
+            background: rgba(5, 24, 55, 0.75);
+            box-shadow:
+                0 0 20px rgba(0, 136, 255, 0.5),
+                0 0 45px rgba(0, 136, 255, 0.2);
+            backdrop-filter: blur(10px);
+            animation: appear 1s ease;
         }
 
+        @keyframes appear {
+            from {
+                opacity: 0;
+                transform: translateY(25px) scale(0.95);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0) scale(1);
+            }
+        }
+
+        h1 {
+            font-size: clamp(25px, 6vw, 34px);
+            color: #a9d9ff;
+            text-shadow: 0 0 15px #168cff;
+            margin-bottom: 12px;
+        }
+
+        .subtitle {
+            font-size: 14px;
+            color: #d4eaff;
+            line-height: 1.6;
+            margin-bottom: 25px;
+        }
+
+        /* Form */
+        .input-group {
+            text-align: left;
+            margin-bottom: 18px;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 8px;
+            font-size: 14px;
+            color: #d9ecff;
+        }
+
+        input {
+            width: 100%;
+            padding: 13px;
+            border: 1px solid #4ba7ff;
+            border-radius: 10px;
+            outline: none;
+            color: white;
+            background: rgba(0, 18, 45, 0.85);
+            font-size: 15px;
+            transition: 0.3s;
+        }
+
+        input:focus {
+            border-color: #a4dcff;
+            box-shadow: 0 0 15px rgba(0, 145, 255, 0.7);
+        }
+
+        input::placeholder {
+            color: #8faacb;
+        }
+
+        input[type="date"]::-webkit-calendar-picker-indicator {
+            cursor: pointer;
+            filter: invert(1);
+        }
+
+        /* Continue button */
+        button {
+            width: 100%;
+            margin-top: 8px;
+            padding: 14px;
+            border: none;
+            border-radius: 12px;
+            color: white;
+            background: linear-gradient(90deg, #087cff, #00b7ff);
+            font-size: 16px;
+            font-weight: bold;
+            cursor: pointer;
+            box-shadow: 0 0 18px rgba(0, 145, 255, 0.5);
+            transition: 0.3s;
+        }
+
+        button:hover {
+            transform: scale(1.04);
+            box-shadow: 0 0 28px rgba(0, 183, 255, 0.9);
+        }
+
+        button:active {
+            transform: scale(0.98);
+        }
+
+        #message {
+            margin-top: 16px;
+            color: #a9dcff;
+            font-size: 14px;
+            overflow-wrap: anywhere;
+        }
+
+        .footer {
+            margin-top: 24px;
+            font-size: 12px;
+            color: #9bbfe8;
+        }
+
+        /* Falling hearts */
         .heart {
-            position: absolute;
-            top: -50px;
-            color: #19baff;
-            text-shadow: 0 0 15px #008cff;
-            animation: fall linear infinite;
-        }
-
-        .sparkle {
-            position: absolute;
-            width: 3px;
-            height: 3px;
-            border-radius: 50%;
-            background: white;
-            box-shadow: 0 0 10px 3px #168cff;
-            animation: twinkle 1s ease-in-out infinite alternate;
+            position: fixed;
+            top: -40px;
+            z-index: 1;
+            color: #64baff;
+            text-shadow: 0 0 12px #168cff;
+            pointer-events: none;
+            user-select: none;
+            animation: fall linear forwards;
         }
 
         @keyframes fall {
@@ -67,13 +168,32 @@
                 opacity: 1;
             }
 
+            90% {
+                opacity: 1;
+            }
+
             100% {
                 transform: translateY(115vh) rotate(360deg);
                 opacity: 0;
             }
         }
 
-        @keyframes twinkle {
+        /* Glitter particles */
+        .sparkle {
+            position: fixed;
+            z-index: 1;
+            width: 4px;
+            height: 4px;
+            border-radius: 50%;
+            background: #d5efff;
+            box-shadow:
+                0 0 6px #8bcaff,
+                0 0 12px #168cff;
+            pointer-events: none;
+            animation: glitter 2s ease-in-out infinite alternate;
+        }
+
+        @keyframes glitter {
             from {
                 opacity: 0.2;
                 transform: scale(0.5);
@@ -85,317 +205,145 @@
             }
         }
 
-        .container {
-            position: relative;
-            z-index: 1;
-            width: 90%;
-            max-width: 420px;
-            padding: 20px 0;
-            text-align: center;
-        }
-
-        .heading {
-            margin-bottom: 12px;
-            color: #80d7ff;
-            font-family: Georgia, serif;
-            font-size: clamp(42px, 10vw, 58px);
-            font-style: italic;
-            text-shadow: 0 0 18px #008cff;
-        }
-
-        .subtitle {
-            margin-bottom: 25px;
-            color: #75ceff;
-            line-height: 1.8;
-        }
-
-        .login-box {
-            padding: 35px 25px;
-            border: 1px solid #168cff;
-            border-radius: 25px;
-
-            background: rgba(0, 25, 85, 0.78);
-            backdrop-filter: blur(15px);
-
-            box-shadow: 0 0 30px rgba(0, 140, 255, 0.4);
-        }
-
-        .cake {
-            margin-bottom: 10px;
-            font-size: 45px;
-        }
-
-        .login-title {
-            margin-bottom: 12px;
-            color: #8cdeff;
-            font-family: Georgia, serif;
-            font-size: 34px;
-            font-style: italic;
-        }
-
-        .description {
-            margin-bottom: 25px;
-            color: #a6dfff;
-            line-height: 1.7;
-        }
-
-        .input-box {
-            display: flex;
-            align-items: center;
-            margin-bottom: 20px;
-            padding: 0 15px;
-
-            border: 1px solid #168cff;
-            border-radius: 15px;
-
-            background: rgba(0, 35, 110, 0.65);
-            transition: 0.3s;
-        }
-
-        .input-box:focus-within {
-            border-color: #68d6ff;
-            box-shadow: 0 0 15px #008cff;
-        }
-
-        .input-box span {
-            margin-right: 12px;
-            font-size: 20px;
-        }
-
-        .input-box input {
-            width: 100%;
-            min-width: 0;
-            padding: 16px 0;
-
-            border: none;
-            outline: none;
-
-            background: transparent;
-            color: white;
-            font-family: inherit;
-            font-size: 15px;
-        }
-
-        .input-box input::placeholder {
-            color: #81bfff;
-        }
-
-        .input-box input[type="date"] {
-            color-scheme: dark;
-        }
-
-        .login-btn {
-            width: 100%;
-            padding: 16px;
-
-            border: none;
-            border-radius: 15px;
-
-            background: linear-gradient(
-                100deg,
-                #087cff,
-                #05c5ff
-            );
-
-            color: white;
-            font-size: 19px;
-            font-weight: bold;
-
-            cursor: pointer;
-
-            box-shadow: 0 0 20px rgba(0, 153, 255, 0.5);
-            transition: 0.3s;
-        }
-
-        .login-btn:hover {
-            transform: translateY(-3px);
-            box-shadow: 0 0 30px #008cff;
-        }
-
-        .login-btn:active {
-            transform: scale(0.97);
-        }
-
-        #message {
-            margin-top: 15px;
-            color: #8cdeff;
-            font-size: 14px;
-            overflow-wrap: anywhere;
-        }
-
-        .footer {
-            margin-top: 25px;
-            color: #63caff;
-            font-family: Georgia, serif;
-            font-size: 17px;
-            font-style: italic;
-        }
-
         @media (max-width: 400px) {
-            .login-box {
-                padding: 28px 18px;
-            }
-
-            .login-title {
-                font-size: 30px;
-            }
-        }
-
-        @media (max-height: 760px) {
-            body {
-                align-items: flex-start;
-                overflow-y: auto;
-            }
-
             .container {
-                margin: auto;
+                padding: 28px 20px;
+            }
+
+            h1 {
+                font-size: 25px;
             }
         }
 
-        @media (prefers-reduced-motion: reduce) {
-            .heart,
-            .sparkle {
-                animation-duration: 20s;
-            }
-
-            .login-btn {
-                transition: none;
-            }
-        }
     </style>
 </head>
 
 <body>
 
-    <div id="background" aria-hidden="true"></div>
+    <div class="container">
 
-    <main class="container">
+        <h1>Hii Darling💙🌏!!!</h1>
 
-        <h1 class="heading">
-            Birthday Wishes ♡
-        </h1>
+        <p class="subtitle">
+            A little surprise is waiting for you... ✨<br>
+            Enter your details to continue 💙
+        </p>
 
-        <section class="login-box">
+        <form id="loginForm">
 
-            <div class="cake" aria-hidden="true">🎂</div>
+            <div class="input-group">
+                <label for="name">Your Name 💙</label>
+                <input
+                    type="text"
+                    id="name"
+                    placeholder="Enter your name"
+                    autocomplete="name"
+                    required
+                >
+            </div>
 
-            <h2 class="login-title">Hii Darling💙🌏!!!</h2>
+            <div class="input-group">
+                <label for="dob">Your Date of Birth 🎂</label>
+                <input
+                    type="date"
+                    id="dob"
+                    required
+                >
+            </div>
 
-            <p class="description">
-                Enter your details to continue<br>
-            </p>
+            <button type="submit">Continue 💙 →</button>
 
-            <form id="loginForm">
+        </form>
 
-                <div class="input-box">
-                    <span aria-hidden="true">👤</span>
-
-                    <input
-                        type="text"
-                        id="name"
-                        placeholder="Enter Your Name"
-                        autocomplete="name"
-                        maxlength="60"
-                        required
-                    >
-                </div>
-
-                <div class="input-box">
-                    <span aria-hidden="true">🎂</span>
-
-                    <input
-                        type="date"
-                        id="dob"
-                        aria-label="Date of Birth"
-                        required
-                    >
-                </div>
-
-                <button type="submit" class="login-btn">
-                    Continue 💙 →
-                </button>
-
-            </form>
-
-            <p id="message" role="status" aria-live="polite"></p>
-
-        </section>
+        <p id="message" aria-live="polite"></p>
 
         <p class="footer">
             It's my small effort for youhh ♡
         </p>
 
-    </main>
+    </div>
 
     <script>
-        const background = document.getElementById("background");
-
-        for (let i = 0; i < 35; i++) {
-            const heart = document.createElement("div");
-
-            heart.className = "heart";
-            heart.textContent = Math.random() > 0.5 ? "♡" : "♡";
-
-            heart.style.left = Math.random() * 100 + "%";
-            heart.style.fontSize = (15 + Math.random() * 20) + "px";
-            heart.style.animationDuration = (6 + Math.random() * 9) + "s";
-            heart.style.animationDelay = (-Math.random() * 15) + "s";
-
-            background.appendChild(heart);
-        }
-
-        for (let i = 0; i < 65; i++) {
-            const sparkle = document.createElement("div");
-
-            sparkle.className = "sparkle";
-
-            sparkle.style.left = Math.random() * 100 + "%";
-            sparkle.style.top = Math.random() * 100 + "%";
-            sparkle.style.animationDelay = Math.random() * 3 + "s";
-
-            background.appendChild(sparkle);
-        }
-
+        const loginForm = document.getElementById("loginForm");
+        const nameInput = document.getElementById("name");
         const dobInput = document.getElementById("dob");
         const message = document.getElementById("message");
-        const loginForm = document.getElementById("loginForm");
 
+        // Set today's date as the maximum selectable date
         const today = new Date();
-
-        const localToday = [
-            today.getFullYear(),
-            String(today.getMonth() + 1).padStart(2, "0"),
-            String(today.getDate()).padStart(2, "0")
-        ].join("-");
+        const localToday =
+            today.getFullYear() + "-" +
+            String(today.getMonth() + 1).padStart(2, "0") + "-" +
+            String(today.getDate()).padStart(2, "0");
 
         dobInput.max = localToday;
 
+        // Continue to the second page
         loginForm.addEventListener("submit", function (event) {
             event.preventDefault();
 
-            const name = document.getElementById("name").value.trim();
+            const name = nameInput.value.trim();
             const dob = dobInput.value;
 
+            // Check that both fields are entered
             if (!name || !dob) {
                 message.textContent =
                     "💙 Please enter your name and date of birth.";
-
                 return;
             }
 
+            // Prevent future dates
             if (dob > localToday) {
                 message.textContent =
                     "✨ Please enter a valid date of birth.";
-
                 return;
             }
+
+            // Save details for the next page
             sessionStorage.setItem("birthdayUserName", name);
             sessionStorage.setItem("birthdayUserDOB", dob);
 
-            message.textContent =
-                "🎉 Welcome, " + name + "! Your details are ready.";
-
+            // Open the second page
+            window.location.href = "home_page.html";
         });
+
+        // Create falling hearts
+        function createHeart() {
+            const heart = document.createElement("div");
+
+            heart.className = "heart";
+            heart.textContent = "♡";
+
+            heart.style.left = Math.random() * 100 + "vw";
+            heart.style.fontSize = (15 + Math.random() * 22) + "px";
+            heart.style.animationDuration = (5 + Math.random() * 6) + "s";
+
+            document.body.appendChild(heart);
+
+            setTimeout(() => {
+                heart.remove();
+            }, 11000);
+        }
+
+        // Create a heart every 350 milliseconds
+        setInterval(createHeart, 350);
+
+        // Create glitter particles
+        function createSparkle() {
+            const sparkle = document.createElement("div");
+
+            sparkle.className = "sparkle";
+            sparkle.style.left = Math.random() * 100 + "vw";
+            sparkle.style.top = Math.random() * 100 + "vh";
+            sparkle.style.animationDelay = Math.random() * 2 + "s";
+
+            document.body.appendChild(sparkle);
+        }
+
+        // Change 60 to increase the number of glitter particles
+        for (let i = 0; i < 60; i++) {
+            createSparkle();
+        }
     </script>
 
 </body>
