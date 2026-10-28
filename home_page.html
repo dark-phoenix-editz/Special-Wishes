@@ -553,12 +553,12 @@ function createBalloon() {
     const balloon = document.createElement("div");
 
     balloon.className = "balloon";
-    balloon.textContent = ["💙", "🩵", "💜", "♡"][
-        Math.floor(Math.random() * 4)
+    balloon.textContent = ["💙", "🩵", "💜", "💙", "🩵", "💜"][
+        Math.floor(Math.random() * 6)
     ];
 
     balloon.style.left = (5 + Math.random() * 90) + "vw";
-    balloon.style.animationDuration = (4 + Math.random() * 1.5) + "s";
+    balloon.style.animationDuration = (6 + Math.random() * 1.5) + "s";
 
     document.body.appendChild(balloon);
 
