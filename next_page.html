@@ -509,11 +509,52 @@ h1 {
         min-height: 250px;
     }
 }
+    /* FALLING HEART BACKGROUND */
+
+#heartBackground {
+    position: fixed;
+    inset: 0;
+    overflow: hidden;
+    pointer-events: none;
+    z-index: 0;
+}
+
+.falling-heart {
+    position: absolute;
+    top: -40px;
+    color: #54caff;
+    font-size: 20px;
+    opacity: 0.7;
+    text-shadow:
+        0 0 8px #168cff,
+        0 0 18px #54caff;
+    animation: heartFall linear forwards;
+}
+
+@keyframes heartFall {
+    0% {
+        transform: translateY(-40px) rotate(0deg);
+        opacity: 0;
+    }
+
+    10% {
+        opacity: 0.7;
+    }
+
+    90% {
+        opacity: 0.7;
+    }
+
+    100% {
+        transform: translateY(110vh) rotate(360deg);
+        opacity: 0;
+    }
+}
 </style>
 </head>
 
 <body>
-
+<div id="heartBackground"></div>
 <div id="stars"></div>
 <div class="sparkles" id="sparkles"></div>
 <div class="custom-cursor" id="customCursor"></div>
@@ -635,6 +676,32 @@ h1 {
 </main>
 
 <script>
+    /* FALLING HEART BACKGROUND */
+
+const heartBackground = document.getElementById("heartBackground");
+
+function createFallingHeart() {
+    const heart = document.createElement("span");
+
+    heart.className = "falling-heart";
+    heart.innerHTML = "♡";
+
+    heart.style.left = Math.random() * 100 + "vw";
+    heart.style.fontSize = (12 + Math.random() * 22) + "px";
+    heart.style.animationDuration = (5 + Math.random() * 7) + "s";
+    heart.style.animationDelay = "0s";
+
+    heartBackground.appendChild(heart);
+
+    setTimeout(() => {
+        heart.remove();
+    }, 13000);
+}
+
+/* Create a new heart every 350 milliseconds */
+
+setInterval(createFallingHeart, 350);
+    
 /* CREATE BACKGROUND STARS */
 
 const stars = document.getElementById("stars");
