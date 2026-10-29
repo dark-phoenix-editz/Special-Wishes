@@ -1,0 +1,1051 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Your Special Surprise 💙</title>
+
+<link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@600;700&family=Orbitron:wght@500;700&family=Poppins:wght@400;500;600&display=swap" rel="stylesheet">
+
+<style>
+* {
+    box-sizing: border-box;
+}
+
+body {
+    margin: 0;
+    min-height: 100vh;
+    overflow-x: hidden;
+    text-align: center;
+    color: white;
+    font-family: 'Poppins', sans-serif;
+
+    background:
+        radial-gradient(ellipse at top, #102c64 0%, #06142f 45%, #01040d 100%);
+}
+
+#stars,
+#fireworks,
+#sparkles {
+    position: fixed;
+    inset: 0;
+    overflow: hidden;
+    pointer-events: none;
+}
+
+#stars {
+    z-index: 0;
+}
+
+#fireworks {
+    z-index: 5;
+}
+
+#sparkles {
+    z-index: 6;
+}
+
+.star {
+    position: absolute;
+    width: 3px;
+    height: 3px;
+    background: #d9f6ff;
+    border-radius: 50%;
+    box-shadow: 0 0 10px #58caff;
+    animation: twinkle 2s infinite alternate;
+}
+
+@keyframes twinkle {
+    from {
+        opacity: .2;
+        transform: scale(.7);
+    }
+
+    to {
+        opacity: 1;
+        transform: scale(1.5);
+    }
+}
+
+.container {
+    position: relative;
+    z-index: 2;
+    width: 94%;
+    max-width: 950px;
+    margin: auto;
+    padding: 30px 0 60px;
+}
+
+h1 {
+    font-family: 'Cinzel', serif;
+    font-size: clamp(2rem, 5vw, 3.4rem);
+    color: #e9faff;
+    text-shadow: 0 0 12px #39baff, 0 0 35px #087bff;
+    margin-bottom: 10px;
+}
+
+.subtitle {
+    color: #bfeaff;
+    margin-bottom: 20px;
+}
+
+.instructions {
+    color: #d9f5ff;
+    font-size: .95rem;
+    margin: 18px 0;
+}
+
+.status {
+    color: #9ce5ff;
+    font-family: 'Orbitron', sans-serif;
+    font-size: .9rem;
+    margin-bottom: 18px;
+}
+
+/* PUZZLE BOARD */
+
+.puzzle-board {
+    width: min(100%, 510px);
+    aspect-ratio: 1 / 1;
+    margin: 20px auto;
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 5px;
+    padding: 7px;
+
+    border: 2px solid #91e8ff;
+    border-radius: 14px;
+
+    background: #07152c;
+
+    box-shadow:
+        0 0 18px #22baff,
+        0 0 40px #087bff66;
+
+    transition: filter 1.5s ease, opacity 1.5s ease;
+}
+
+.puzzle-board.completed {
+    filter: blur(5px);
+    opacity: .7;
+}
+
+.puzzle-piece {
+    position: relative;
+    min-width: 0;
+    min-height: 0;
+    overflow: hidden;
+
+    border: 1px solid #80dfff88;
+    border-radius: 5px;
+
+    background-color: #102b53;
+    background-repeat: no-repeat;
+    background-size: 300% 300%;
+
+    cursor: grab;
+    touch-action: manipulation;
+
+    transition: transform .2s, border-color .2s;
+}
+
+.puzzle-piece:hover {
+    border-color: #ffffff;
+    transform: scale(.98);
+}
+
+.puzzle-piece:active {
+    cursor: grabbing;
+}
+
+.puzzle-piece.selected {
+    border: 3px solid #fff;
+    box-shadow: 0 0 18px #53d7ff;
+    transform: scale(.95);
+}
+
+.puzzle-piece:focus-visible {
+    outline: 3px solid white;
+    outline-offset: -4px;
+}
+
+/* PUZZLE BUTTONS */
+
+.button {
+    display: inline-block;
+    padding: 12px 24px;
+    margin: 8px;
+
+    border: 1px solid #b5f0ff;
+    border-radius: 30px;
+
+    color: white;
+    font-family: 'Orbitron', sans-serif;
+    font-size: .8rem;
+    font-weight: 700;
+    letter-spacing: 1px;
+
+    background: linear-gradient(100deg, #0757cb, #159fe8);
+
+    box-shadow: 0 0 18px #168cff55;
+
+    cursor: pointer;
+    transition: .25s;
+}
+
+.button:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 0 25px #53d7ff;
+}
+
+.button:disabled {
+    opacity: .5;
+    cursor: not-allowed;
+    transform: none;
+}
+
+.hidden {
+    display: none !important;
+}
+
+/* CELEBRATION TEXT */
+
+.victory-title {
+    display: none;
+    margin: 24px auto;
+    color: #e4fbff;
+    font-family: 'Cinzel', serif;
+    font-size: clamp(1.8rem, 5vw, 3rem);
+    text-shadow: 0 0 12px #3ccaff, 0 0 35px #168cff;
+    animation: victoryIn 1s ease both;
+}
+
+@keyframes victoryIn {
+    from {
+        opacity: 0;
+        transform: scale(.65);
+    }
+
+    to {
+        opacity: 1;
+        transform: scale(1);
+    }
+}
+
+/* FLOATING WISHES BOX */
+
+.wishes-box {
+    display: none;
+    position: relative;
+
+    width: min(100%, 760px);
+    margin: 30px auto 0;
+    padding: clamp(22px, 5vw, 42px);
+
+    border: 1px solid #8de6ff;
+    border-radius: 24px;
+
+    background: linear-gradient(
+        145deg,
+        rgba(13, 43, 87, .96),
+        rgba(3, 12, 33, .97)
+    );
+
+    box-shadow:
+        0 0 18px #22baff,
+        0 0 55px #087bff77,
+        inset 0 0 25px #2aaeff22;
+
+    animation: floatBox 4s ease-in-out infinite, boxAppear 1.2s ease both;
+}
+
+.wishes-box::before {
+    content: "";
+    position: absolute;
+    inset: -6px;
+    border: 1px solid #ffffff66;
+    border-radius: 29px;
+    pointer-events: none;
+    animation: glowingBorder 1.5s ease-in-out infinite alternate;
+}
+
+@keyframes floatBox {
+    0%, 100% {
+        transform: translateY(0);
+    }
+
+    50% {
+        transform: translateY(-8px);
+    }
+}
+
+@keyframes boxAppear {
+    from {
+        opacity: 0;
+        transform: translateY(30px) scale(.95);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0) scale(1);
+    }
+}
+
+@keyframes glowingBorder {
+    from {
+        box-shadow: 0 0 5px #7be6ff;
+    }
+
+    to {
+        box-shadow: 0 0 22px #44bfff, 0 0 38px #267cff;
+    }
+}
+
+.wishes-box h2 {
+    color: #e3faff;
+    font-family: 'Cinzel', serif;
+    font-size: clamp(1.5rem, 4vw, 2.3rem);
+    text-shadow: 0 0 15px #48bfff;
+    margin-top: 0;
+}
+
+.wishes-box p {
+    color: #d3efff;
+    line-height: 1.9;
+    font-size: clamp(.95rem, 2.5vw, 1.08rem);
+}
+
+.heart {
+    display: inline-block;
+    font-size: 2rem;
+    animation: heartbeat 1.2s infinite;
+    filter: drop-shadow(0 0 12px #38baff);
+}
+
+@keyframes heartbeat {
+    0%, 100% {
+        transform: scale(1);
+    }
+
+    50% {
+        transform: scale(1.2);
+    }
+}
+
+/* SPARKLES */
+
+.sparkle {
+    position: absolute;
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    background: white;
+
+    box-shadow:
+        0 0 8px 3px #74dcff,
+        0 0 20px #168cff;
+
+    animation: sparkle 1.5s ease-in-out infinite;
+}
+
+@keyframes sparkle {
+    0%, 100% {
+        opacity: .1;
+        transform: scale(.5) rotate(0);
+    }
+
+    50% {
+        opacity: 1;
+        transform: scale(1.5) rotate(90deg);
+    }
+}
+
+/* FIREWORK PARTICLES */
+
+.firework-particle {
+    position: absolute;
+    width: 5px;
+    height: 5px;
+    border-radius: 50%;
+    background: var(--particle-color);
+    box-shadow: 0 0 10px var(--particle-color);
+    animation: explode 1.2s ease-out forwards;
+}
+
+@keyframes explode {
+    from {
+        opacity: 1;
+        transform: translate(0, 0) scale(1);
+    }
+
+    to {
+        opacity: 0;
+        transform: translate(var(--dx), var(--dy)) scale(.2);
+    }
+}
+
+/* NEXT BUTTON */
+
+.next-button {
+    display: none;
+    margin: 30px auto 0;
+    padding: 14px 30px;
+
+    border: 1px solid #b5f0ff;
+    border-radius: 30px;
+
+    color: white;
+    font-family: 'Orbitron', sans-serif;
+    font-size: .85rem;
+    font-weight: 700;
+    letter-spacing: 1px;
+
+    background: linear-gradient(100deg, #0757cb, #159fe8);
+
+    box-shadow:
+        0 0 18px #168cff,
+        0 0 35px #168cff55;
+
+    cursor: pointer;
+    animation: buttonAppear .8s ease both;
+    transition: .25s;
+}
+
+.next-button:hover {
+    transform: translateY(-3px) scale(1.03);
+    box-shadow: 0 0 25px #53d7ff, 0 0 45px #168cff88;
+}
+
+@keyframes buttonAppear {
+    from {
+        opacity: 0;
+        transform: translateY(15px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* CUSTOM CURSOR */
+
+.custom-cursor {
+    position: fixed;
+    z-index: 100;
+    pointer-events: none;
+
+    width: 20px;
+    height: 20px;
+
+    border: 2px solid #82e4ff;
+    border-radius: 50%;
+
+    transform: translate(-50%, -50%);
+    box-shadow: 0 0 12px #20aaff;
+    display: none;
+}
+
+@media (pointer: fine) {
+    .custom-cursor {
+        display: block;
+    }
+
+    body, button {
+        cursor: none;
+    }
+}
+
+@media (max-width: 500px) {
+    .puzzle-board {
+        gap: 3px;
+        padding: 4px;
+    }
+
+    .puzzle-piece {
+        border-radius: 3px;
+    }
+}
+</style>
+</head>
+
+<body>
+
+<div id="stars"></div>
+<div id="fireworks"></div>
+<div id="sparkles"></div>
+<div class="custom-cursor" id="customCursor"></div>
+
+<main class="container">
+
+    <h1>A Special Puzzle</h1>
+
+    <p class="subtitle">
+        Solve this little puzzle to unlock your next surprise 💙
+    </p>
+
+    <p class="instructions" id="instructions">
+        Select two pieces to swap them. Put every piece in its correct place!
+    </p>
+
+    <p class="status" id="status">
+        PUZZLE PIECES: 9
+    </p>
+
+    <div class="puzzle-board" id="puzzleBoard"></div>
+
+    <button class="button" id="shuffleButton" onclick="shufflePuzzle()">
+        SHUFFLE AGAIN
+    </button>
+
+    <h2 class="victory-title" id="victoryTitle">
+        YOU DID IT! ✨
+    </h2>
+
+    <!-- COMPLIMENTARY WISHES -->
+
+    <section class="wishes-box" id="wishesBox">
+
+        <div class="heart">💙</div>
+
+        <h2>A Little Message for You</h2>
+
+        <p id="wishText">
+            You are a truly wonderful person, and you deserve all the
+            happiness, peace, and beautiful surprises life can offer.
+            May your days be filled with reasons to smile, people who
+            appreciate you, dreams that inspire you, and memories that
+            make your heart feel warm. Never forget how special your
+            own light is. Keep shining, keep dreaming, and may this new
+            chapter of your life bring countless moments worth smiling
+            about. You deserve the very best today and always! ✨💙
+        </p>
+
+        <div class="heart">✨ 💙 ✨</div>
+
+    </section>
+
+    <button class="next-button" id="nextButton" onclick="goNext()">
+        NEXT SURPRISE ➜
+    </button>
+
+</main>
+
+<script>
+/* =================================
+   BACKGROUND STARS
+================================= */
+
+const stars = document.getElementById("stars");
+
+for (let i = 0; i < 80; i++) {
+    const star = document.createElement("i");
+
+    star.className = "star";
+    star.style.left = Math.random() * 100 + "%";
+    star.style.top = Math.random() * 100 + "%";
+    star.style.animationDelay = Math.random() * 2 + "s";
+
+    stars.appendChild(star);
+}
+
+/* =================================
+   CUSTOM IMAGE
+================================= */
+
+/*
+   Put your chosen image in the SAME folder as this HTML file.
+   Rename it to puzzle.jpg.
+
+   Example:
+   index.html
+   home_page.html
+   next_page.html
+   next_surprise.html
+   puzzle.jpg
+*/
+
+const IMAGE_URL = "puzzle.jpg";
+
+/* =================================
+   PUZZLE SETUP
+================================= */
+
+const board = document.getElementById("puzzleBoard");
+const statusText = document.getElementById("status");
+const instructions = document.getElementById("instructions");
+const shuffleButton = document.getElementById("shuffleButton");
+const victoryTitle = document.getElementById("victoryTitle");
+const wishesBox = document.getElementById("wishesBox");
+const nextButton = document.getElementById("nextButton");
+
+const SIZE = 3;
+const TOTAL = SIZE * SIZE;
+
+let pieces = [];
+let firstSelected = null;
+let solved = false;
+let celebrationStarted = false;
+
+/* Create one puzzle piece for each image section */
+
+function createPuzzle() {
+
+    board.innerHTML = "";
+    pieces = [];
+
+    for (let i = 0; i < TOTAL; i++) {
+
+        const piece = document.createElement("button");
+
+        piece.type = "button";
+        piece.className = "puzzle-piece";
+        piece.setAttribute("aria-label", "Puzzle piece " + (i + 1));
+
+        piece.dataset.correct = i;
+        piece.dataset.position = i;
+
+        const row = Math.floor(i / SIZE);
+        const col = i % SIZE;
+
+        piece.style.backgroundImage = `url("${IMAGE_URL}")`;
+
+        piece.style.backgroundPosition =
+            (col * 50) + "% " + (row * 50) + "%";
+
+        piece.addEventListener("click", () => selectPiece(piece));
+
+        pieces.push(piece);
+    }
+
+    shufflePuzzle();
+}
+
+/* =================================
+   SHUFFLE THE PUZZLE
+================================= */
+
+function shufflePuzzle() {
+
+    if (solved) return;
+
+    let order = Array.from(
+        { length: TOTAL },
+        (_, i) => i
+    );
+
+    /*
+       Shuffle the order, then make sure it isn't already solved.
+    */
+
+    do {
+
+        for (let i = order.length - 1; i > 0; i--) {
+
+            const j = Math.floor(Math.random() * (i + 1));
+
+            [order[i], order[j]] = [order[j], order[i]];
+
+        }
+
+    } while (order.every((value, index) => value === index));
+
+    board.innerHTML = "";
+
+    order.forEach((correctIndex, position) => {
+
+        const piece = pieces[correctIndex];
+
+        piece.dataset.position = position;
+
+        board.appendChild(piece);
+
+    });
+
+    firstSelected = null;
+
+    statusText.textContent = "PUZZLE PIECES: " + TOTAL;
+
+    instructions.textContent =
+        "Select two pieces to swap them. Put every piece in its correct place!";
+
+    updateSelection();
+}
+
+/* =================================
+   SELECT AND SWAP PIECES
+================================= */
+
+function selectPiece(piece) {
+
+    if (solved) return;
+
+    if (firstSelected === null) {
+
+        firstSelected = piece;
+
+        updateSelection();
+
+        instructions.textContent =
+            "Now select another piece to swap positions.";
+
+        return;
+    }
+
+    if (firstSelected === piece) {
+
+        firstSelected = null;
+        updateSelection();
+
+        instructions.textContent =
+            "Select two pieces to swap them.";
+
+        return;
+    }
+
+    const firstPosition = firstSelected.dataset.position;
+    const secondPosition = piece.dataset.position;
+
+    /*
+       Swap the two selected pieces in the board.
+    */
+
+    const children = [...board.children];
+
+    const firstNode = children[Number(firstPosition)];
+    const secondNode = children[Number(secondPosition)];
+
+    if (Number(firstPosition) < Number(secondPosition)) {
+
+        board.insertBefore(secondNode, firstNode);
+        board.insertBefore(firstNode, board.children[Number(secondPosition) + 1]);
+
+    } else {
+
+        board.insertBefore(firstNode, secondNode);
+        board.insertBefore(secondNode, board.children[Number(firstPosition) + 1]);
+
+    }
+
+    /*
+       Refresh positions after the swap.
+    */
+
+    [...board.children].forEach((child, index) => {
+        child.dataset.position = index;
+    });
+
+    firstSelected = null;
+
+    updateSelection();
+    checkPuzzle();
+}
+
+/* Show which piece is selected */
+
+function updateSelection() {
+
+    pieces.forEach(piece => {
+        piece.classList.remove("selected");
+    });
+
+    if (firstSelected) {
+        firstSelected.classList.add("selected");
+    }
+}
+
+/* =================================
+   CHECK IF SOLVED
+================================= */
+
+function checkPuzzle() {
+
+    const currentPieces = [...board.children];
+
+    const correct = currentPieces.every((piece, index) => {
+        return Number(piece.dataset.correct) === index;
+    });
+
+    const correctCount = currentPieces.filter((piece, index) => {
+        return Number(piece.dataset.correct) === index;
+    }).length;
+
+    statusText.textContent =
+        "CORRECT PIECES: " + correctCount + " / " + TOTAL;
+
+    if (correct) {
+        solvePuzzle();
+    }
+}
+
+/* =================================
+   PUZZLE COMPLETED
+================================= */
+
+function solvePuzzle() {
+
+    if (celebrationStarted) return;
+
+    solved = true;
+    celebrationStarted = true;
+
+    firstSelected = null;
+
+    updateSelection();
+
+    statusText.textContent = "PUZZLE SOLVED! 🎉";
+
+    instructions.textContent =
+        "Amazing! Your surprise is being unlocked…";
+
+    shuffleButton.disabled = true;
+
+    victoryTitle.style.display = "block";
+
+    /* Launch confetti and fireworks */
+
+    launchConfetti();
+    launchFireworks();
+
+    /*
+       After the celebration, blur the completed puzzle
+       and show the complimentary wishes.
+    */
+
+    setTimeout(() => {
+
+        board.classList.add("completed");
+
+        wishesBox.style.display = "block";
+
+        wishesBox.scrollIntoView({
+            behavior: "smooth",
+            block: "center"
+        });
+
+        createSparkles(
+            wishesBox.getBoundingClientRect(),
+            70
+        );
+
+        /*
+           Show the next button after the wishes have
+           been visible for 4 seconds.
+        */
+
+        setTimeout(() => {
+
+            nextButton.style.display = "inline-block";
+
+            createSparkles(
+                nextButton.getBoundingClientRect(),
+                25
+            );
+
+        }, 4000);
+
+    }, 3500);
+}
+
+/* =================================
+   CONFETTI
+================================= */
+
+function launchConfetti() {
+
+    const colors = [
+        "#42caff",
+        "#ffffff",
+        "#168cff",
+        "#a7ecff",
+        "#8d74ff",
+        "#ff7fca"
+    ];
+
+    for (let i = 0; i < 160; i++) {
+
+        const confetti = document.createElement("i");
+
+        confetti.style.position = "fixed";
+        confetti.style.left = Math.random() * 100 + "vw";
+        confetti.style.top = "-15px";
+
+        confetti.style.width =
+            (5 + Math.random() * 7) + "px";
+
+        confetti.style.height =
+            (7 + Math.random() * 9) + "px";
+
+        confetti.style.background =
+            colors[Math.floor(Math.random() * colors.length)];
+
+        confetti.style.borderRadius =
+            Math.random() > 0.5 ? "50%" : "2px";
+
+        confetti.style.pointerEvents = "none";
+        confetti.style.zIndex = "10";
+
+        document.body.appendChild(confetti);
+
+        const duration = 2500 + Math.random() * 2500;
+
+        const drift = (Math.random() - 0.5) * 300;
+
+        confetti.animate(
+            [
+                {
+                    transform: "translate(0, 0) rotate(0deg)",
+                    opacity: 1
+                },
+                {
+                    transform:
+                        `translate(${drift}px, 110vh) rotate(${720 + Math.random() * 720}deg)`,
+                    opacity: 0.8
+                }
+            ],
+            {
+                duration: duration,
+                easing: "ease-out"
+            }
+        );
+
+        setTimeout(() => confetti.remove(), duration + 100);
+    }
+}
+
+/* =================================
+   FIREWORKS
+================================= */
+
+function launchFireworks() {
+
+    const fireworkLayer = document.getElementById("fireworks");
+
+    const colors = [
+        "#ffffff",
+        "#54d8ff",
+        "#168cff",
+        "#a78bfa",
+        "#ff8fd1"
+    ];
+
+    function burst() {
+
+        const x = 10 + Math.random() * 80;
+        const y = 15 + Math.random() * 55;
+
+        const color =
+            colors[Math.floor(Math.random() * colors.length)];
+
+        for (let i = 0; i < 32; i++) {
+
+            const particle = document.createElement("i");
+
+            particle.className = "firework-particle";
+
+            particle.style.left = x + "vw";
+            particle.style.top = y + "vh";
+            particle.style.setProperty("--particle-color", color);
+
+            const angle = Math.PI * 2 * i / 32;
+            const distance = 50 + Math.random() * 100;
+
+            particle.style.setProperty(
+                "--dx",
+                Math.cos(angle) * distance + "px"
+            );
+
+            particle.style.setProperty(
+                "--dy",
+                Math.sin(angle) * distance + "px"
+            );
+
+            fireworkLayer.appendChild(particle);
+
+            setTimeout(() => particle.remove(), 1400);
+        }
+    }
+
+    /*
+       Fireworks continue briefly while the confetti falls.
+    */
+
+    let bursts = 0;
+
+    const fireworkTimer = setInterval(() => {
+
+        burst();
+        bursts++;
+
+        if (bursts >= 7) {
+            clearInterval(fireworkTimer);
+        }
+
+    }, 450);
+}
+
+/* =================================
+   SPARKLING WISHES BOX
+================================= */
+
+function createSparkles(rect, amount = 40) {
+
+    const sparkleLayer = document.getElementById("sparkles");
+
+    for (let i = 0; i < amount; i++) {
+
+        const sparkle = document.createElement("i");
+
+        sparkle.className = "sparkle";
+
+        sparkle.style.left =
+            (rect.left + Math.random() * rect.width) + "px";
+
+        sparkle.style.top =
+            (rect.top + Math.random() * rect.height) + "px";
+
+        sparkle.style.animationDelay =
+            Math.random() * 1.5 + "s";
+
+        sparkleLayer.appendChild(sparkle);
+
+        setTimeout(() => sparkle.remove(), 5000);
+    }
+}
+
+/* =================================
+   CUSTOM BLUE CURSOR
+================================= */
+
+const customCursor = document.getElementById("customCursor");
+
+document.addEventListener("pointermove", function(event) {
+
+    customCursor.style.left = event.clientX + "px";
+    customCursor.style.top = event.clientY + "px";
+
+});
+
+/* =================================
+   NEXT PAGE
+================================= */
+
+function goNext() {
+
+    /*
+       Change this filename if your next page
+       uses a different name.
+    */
+
+    window.location.href = "final_surprise.html";
+}
+
+/* Start the puzzle */
+
+createPuzzle();
+
+</script>
+
+</body>
+</html>
